@@ -25,6 +25,8 @@ fu! Get_press()
 		retu "enter"
 	elsei cur_lengths[0] == old_lengths[0] - 1
 		retu "backspace"
+	el
+		retu "change"
 	en
 endf
 
@@ -34,7 +36,8 @@ fu! Match_tci()
 	let s:cur_split = Split_line(cur_line, cur_col)
 	let press = Get_press()
 	if has_key(s:match, press) && strcharpart(s:cur_split[1], 0, 1) !~ '\w'
-		cal setline(".", s:cur_split[0] . s:match[press] . s:cur_split[1])
+		let s:cur_split = [s:cur_split[0], s:match[press] . s:cur_split[1]]
+		cal setline(".", join(s:cur_split, ""))
 		DoMatchParen
 	elsei press == "enter" && cur_line =~ s:match.re
 		cal append(line(".") - 1, matchstr(cur_line, '^\s*') . "\t")
