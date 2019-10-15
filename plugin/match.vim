@@ -1,4 +1,3 @@
-"set nosmd
 let s:match = {
 \	"(": ")",
 \	"{": "}",
@@ -56,13 +55,10 @@ fu! Match_icp()
 	if v:char == "\<Tab>"
 		if On_closing()
 			let v:char = ""
-			let ve = &virtualedit
-			set virtualedit=all
+			let l = line(".")
 			wh On_closing()
-				normal l
+				cal cursor(l, col(".") + 1)
 			endw
-
-			let &virtualedit = ve
 		en
 	en
 endf
