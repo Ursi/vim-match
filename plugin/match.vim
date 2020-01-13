@@ -47,7 +47,9 @@ for open_char in keys(s:match)
 	exe 'ino <expr> ' . open_char . ' ' . 'Match(' . char2nr(open_char) . ')'
 endfo
 
-ino <expr> <CR> Autoindent()
+if !exists("match_autoindent") || match_autoindent
+	ino <expr> <CR> Autoindent()
+en
 
 aug match |au!
 	au InsertCharPre * cal Match_icp()
