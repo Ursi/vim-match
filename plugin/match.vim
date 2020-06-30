@@ -12,10 +12,18 @@ let	s:closing = [")", "}", "]", "`", "'", '"']
 
 fu! Match(nr)
 	let char = nr2char(a:nr)
-	if strcharpart(getline("."), col(".") - 1, 1) !~ '\w'
-		retu char . s:match[char] . "\<Left>"
+	if char == "'" || char == '"'
+		if strcharpart(getline("."), col(".") - 2, 1) =~ '\s'
+			retu char . s:match[char] . "\<Left>"
+		el
+			retu char
+		en
 	el
-		retu char
+		if strcharpart(getline("."), col(".") - 1, 1) !~ '\w'
+			retu char . s:match[char] . "\<Left>"
+		el
+			retu char
+		en
 	en
 endf
 
