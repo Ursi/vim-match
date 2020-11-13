@@ -40,15 +40,15 @@ fu! Match_icp()
 		retu count(s:closing, strcharpart(getline("."), col(".") - 1, 1))
 	endf
 
-	if v:char == "\<Tab>"
-		if On_closing()
-			let v:char = ""
-			let l = line(".")
-			wh On_closing()
-				cal cursor(l, col(".") + 1)
-			endw
-		en
-	en
+	" if v:char == "\<Tab>"
+	" 	if On_closing()
+	" 		let v:char = ""
+	" 		let l = line(".")
+	" 		wh On_closing()
+	" 			cal cursor(l, col(".") + 1)
+	" 		endw
+	" 	en
+	" en
 endf
 
 for open_char in keys(s:match)
