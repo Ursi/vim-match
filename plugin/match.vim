@@ -27,14 +27,6 @@ fu! Match(nr)
 	en
 endf
 
-fu! Autoindent()
-	if index(s:closing, strcharpart(getline("."), col(".") - 1, 1)) != -1
-		retu "\<CR>\<CR>\<Up>\<C-T>"
-	el
-		retu "\<CR>"
-	en
-endf
-
 fu! Match_icp()
 	fu! On_closing()
 		retu count(s:closing, strcharpart(getline("."), col(".") - 1, 1))
@@ -54,10 +46,6 @@ endf
 for open_char in keys(s:match)
 	exe 'ino <expr> ' . open_char . ' ' . 'Match(' . char2nr(open_char) . ')'
 endfo
-
-if !exists("match_autoindent") || match_autoindent
-	ino <expr> <CR> Autoindent()
-en
 
 aug match |au!
 	au InsertCharPre * cal Match_icp()
